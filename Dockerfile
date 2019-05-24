@@ -5,4 +5,6 @@ RUN apk -v --update add \
         && \
     rm /var/cache/apk/*
 
-ENTRYPOINT ["bash"]
+RUN git config --global credential.helper '!aws codecommit credential-helper $@' && git config --global credential.UseHttpPath true
+
+ENTRYPOINT ["sh"]
