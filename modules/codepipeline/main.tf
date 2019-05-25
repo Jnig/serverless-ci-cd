@@ -42,17 +42,21 @@ resource "aws_codepipeline" "codepipeline" {
     for_each = var.stages
     content {
       name = stage.value.name
+
       dynamic "action" {
         for_each = stage.value.actions
-        name             = stage.value.action.name
-        category         = stage.value.action.category
-        owner            = stage.value.action.owner
-        provider         = stage.value.action.provider
-        input_artifacts  = stage.value.action.input_artifacts
-        output_artifacts = stage.value.action.output_artifacts
-        version          = stage.value.action.version
 
-        configuration = stage.value.action.configuration
+        content {
+          name             = action.value.name
+          category         = action.value.category
+          owner            = action.value.owner
+          provider         = action.value.provider
+          input_artifacts  = action.value.input_artifacts
+          output_artifacts = action.value.output_artifacts
+          version          = action.value.version
+
+          configuration = action.value.configuration
+        }
       }
     }
   }

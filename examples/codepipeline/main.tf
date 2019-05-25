@@ -34,7 +34,7 @@ module "mirror" {
         owner            = "AWS"
         provider         = "CodeBuild"
         input_artifacts  = ["source_output"]
-        output_artifacts = ["build_output"]
+        output_artifacts = ["approval_output"]
         version          = "1"
 
         configuration = {
