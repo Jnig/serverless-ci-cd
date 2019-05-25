@@ -10,9 +10,13 @@ variable "stages" {
 
 }
 
+variable "name" {
+
+}
+
 
 resource "aws_codepipeline" "codepipeline" {
-  name     = "tf-test-pipeline"
+  name     = var.name
   role_arn = "${aws_iam_role.codepipeline_role.arn}"
 
   artifact_store {
@@ -54,6 +58,7 @@ resource "aws_codepipeline" "codepipeline" {
           input_artifacts  = action.value.input_artifacts
           output_artifacts = action.value.output_artifacts
           version          = action.value.version
+          run_order        = contains(keys(action.value), "run_order") ? action.value.run_order : 1
 
           configuration = action.value.configuration
         }

@@ -1,11 +1,12 @@
 
 resource "aws_s3_bucket" "codepipeline_bucket" {
-  bucket_prefix = "codepipeline"
-  acl    = "private"
+  bucket_prefix = var.name
+  acl           = "private"
+  force_destroy = true
 }
 
 resource "aws_iam_role" "codepipeline_role" {
-  name = "codepiline-role"
+  name_prefix = var.name
 
   assume_role_policy = <<EOF
 {
