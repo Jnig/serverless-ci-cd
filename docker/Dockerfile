@@ -2,6 +2,7 @@ FROM mesosphere/aws-cli:latest
 
 RUN apk -v --update add \
         git openssh-client \
+        jq \
         && \
     rm /var/cache/apk/*
 
