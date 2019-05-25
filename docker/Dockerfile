@@ -6,8 +6,6 @@ RUN apk -v --update add \
     rm /var/cache/apk/*
 
 ADD mirror.sh /usr/local/bin 
-RUN git config --global credential.helper '!aws codecommit credential-helper $@' \
-    && git config --global credential.UseHttpPath true \
-    && chmod +x /usr/local/bin/mirror.sh
+RUN chmod +x /usr/local/bin/mirror.sh
 
 ENTRYPOINT ["sh"]
