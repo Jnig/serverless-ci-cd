@@ -10,8 +10,12 @@ variable artifacts {
   default = "NO_ARTIFACTS"
 }
 
+variable buildspec {
+  default = ""
+}
+
 resource "aws_iam_role" "codebuild" {
-  name = "${var.name}"
+  name = "codebuild-${var.name}"
 
   assume_role_policy = <<EOF
 {
@@ -107,13 +111,7 @@ resource "aws_codebuild_project" "project" {
 
   source {
     type      = var.artifacts == "NO_ARTIFACTS" ? "NO_SOURCE" : var.artifacts
-    buildspec = <<EOF
-version: 0.2         
-phases:
-  build:
-    commands:
-      - find ./
-    EOF
+    buildspec = var.buildspec
   }
 
 }

@@ -26,7 +26,7 @@ locals {
         version          = "1"
 
         configuration = {
-          ProjectName = "test"
+          ProjectName = "deploy-to-staging"
         }
       }
     ]
@@ -48,7 +48,7 @@ locals {
       },
       {
         run_order        = 2
-        name             = "deploy-to-staging"
+        name             = "deploy-to-production"
         category         = "Build"
         owner            = "AWS"
         provider         = "CodeBuild"
