@@ -53,7 +53,14 @@ resource "aws_iam_role_policy" "codebuild_policy" {
     {
       "Action": "codecommit:*",
       "Effect": "Allow",
-      "Resource": "arn:aws:codecommit:*:*:*"
+      "Resource": "arn:aws:codecommit:*:*:git-mirror-${var.name}"
+    },
+    {
+      "Action": [
+        "secretsmanager:GetSecretValue"
+      ],
+      "Effect": "Allow",
+      "Resource": "${aws_secretsmanager_secret.ssh_key.arn}"
     }
   ]
 }
