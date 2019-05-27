@@ -114,4 +114,9 @@ resource "aws_codebuild_project" "project" {
     buildspec = var.buildspec
   }
 
+  cache {
+    type     = "LOCAL"
+    modes    = ["LOCAL_CUSTOM_CACHE"]
+  } 
+
 }
