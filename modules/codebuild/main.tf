@@ -14,6 +14,10 @@ variable buildspec {
   default = ""
 }
 
+variable cache_bucket {
+  default = ""
+}
+
 resource "aws_iam_role" "codebuild" {
   name = "codebuild-${var.name}"
 
@@ -107,6 +111,7 @@ resource "aws_codebuild_project" "project" {
     image                       = var.docker_image
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
+    privileged_mode             = true
   }
 
   source {
@@ -115,8 +120,8 @@ resource "aws_codebuild_project" "project" {
   }
 
   cache {
-    type     = "LOCAL"
-    modes    = ["LOCAL_CUSTOM_CACHE"]
+    type     = "S3"
+    location = "${var.cache_bucket}/cache"
   } 
 
 }

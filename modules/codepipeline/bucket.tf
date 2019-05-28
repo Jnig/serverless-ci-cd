@@ -1,3 +1,7 @@
+output cache_bucket {
+  value = aws_s3_bucket.codepipeline_bucket.id
+}
+
 
 resource "aws_s3_bucket" "codepipeline_bucket" {
   bucket_prefix = "codepipeline-${var.name}"
