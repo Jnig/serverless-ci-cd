@@ -1,11 +1,3 @@
-variable "codecommit_repo_name" {
-
-}
-
-variable "codecommit_repo_branch" {
-
-}
-
 variable "stages" {
 
 }
@@ -22,24 +14,6 @@ resource "aws_codepipeline" "codepipeline" {
   artifact_store {
     location = "${aws_s3_bucket.codepipeline_bucket.bucket}"
     type     = "S3"
-  }
-
-  stage {
-    name = "Source"
-
-    action {
-      name             = "Source"
-      category         = "Source"
-      owner            = "AWS"
-      provider         = "CodeCommit"
-      version          = "1"
-      output_artifacts = ["source_output"]
-
-      configuration = {
-        RepositoryName = var.codecommit_repo_name
-        BranchName     = var.codecommit_repo_branch
-      }
-    }
   }
 
   dynamic "stage" {

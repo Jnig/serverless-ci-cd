@@ -1,4 +1,42 @@
 locals {
+  source = {
+    name = "Source"
+    actions = [{
+      run_order        = 1
+      name             = "Source-git"
+      category         = "Source"
+      owner            = "AWS"
+      provider         = "CodeCommit"
+      input_artifacts  = []
+      output_artifacts = ["source_output"]
+      version          = "1"
+
+      configuration = {
+        RepositoryName = "git-mirror-test-repo"
+        BranchName     = "dev"
+      }
+      },
+      {
+        run_order        = 1
+        name             = "Source-s3"
+        category         = "Build"
+        owner            = "AWS"
+        provider         = "CodeBuild"
+        input_artifacts  = []
+        output_artifacts = []
+        version          = "1"
+
+        configuration = {
+          ProjectName = "deploy-to-staging"
+        }
+      }
+    ]
+
+
+
+
+  }
+
   build = {
     name = "Build-and-deploy-to-staging"
     actions = [{
@@ -68,9 +106,8 @@ module "mirror" {
   source = "../../modules/codepipeline"
 
   name                   = "demo-pipeline"
-  codecommit_repo_name   = "git-mirror-test-repo"
-  codecommit_repo_branch = "master"
   stages = [
+    local.source,
     local.build,
     local.approval
   ]
