@@ -3,6 +3,10 @@ resource "aws_s3_bucket" "codepipeline_bucket" {
   bucket_prefix = "codepipeline-${var.name}"
   acl           = "private"
   force_destroy = true
+
+  versioning {
+    enabled = true
+  }
 }
 
 resource "aws_iam_role" "codepipeline_role" {
