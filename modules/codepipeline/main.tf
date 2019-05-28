@@ -21,23 +21,22 @@ resource "aws_codepipeline" "codepipeline" {
   }
 
   stage {
-      name = "Source"
+    name = "Source"
 
-      dynamic "action" {
-        for_each = var.sources
+    dynamic "action" {
+      for_each = var.sources
 
-        content {
-          name             = action.value.name
-          category         = action.value.category
-          owner            = action.value.owner
-          provider         = action.value.provider
-          input_artifacts  = action.value.input_artifacts
-          output_artifacts = action.value.output_artifacts
-          version          = action.value.version
-          run_order        = contains(keys(action.value), "run_order") ? action.value.run_order : 1
+      content {
+        name             = action.value.name
+        category         = action.value.category
+        owner            = action.value.owner
+        provider         = action.value.provider
+        input_artifacts  = action.value.input_artifacts
+        output_artifacts = action.value.output_artifacts
+        version          = action.value.version
+        run_order        = contains(keys(action.value), "run_order") ? action.value.run_order : 1
 
-          configuration = action.value.configuration
-        }
+        configuration = action.value.configuration
       }
     }
   }
