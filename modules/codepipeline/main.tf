@@ -2,6 +2,10 @@ variable "stages" {
 
 }
 
+variable "sources" {
+
+}
+
 variable "name" {
 
 }
@@ -15,6 +19,29 @@ resource "aws_codepipeline" "codepipeline" {
     location = "${aws_s3_bucket.codepipeline_bucket.bucket}"
     type     = "S3"
   }
+
+  stage {
+      name = "Source"
+
+      dynamic "action" {
+        for_each = var.sources
+
+        content {
+          name             = action.value.name
+          category         = action.value.category
+          owner            = action.value.owner
+          provider         = action.value.provider
+          input_artifacts  = action.value.input_artifacts
+          output_artifacts = action.value.output_artifacts
+          version          = action.value.version
+          run_order        = contains(keys(action.value), "run_order") ? action.value.run_order : 1
+
+          configuration = action.value.configuration
+        }
+      }
+    }
+  }
+
 
   dynamic "stage" {
     for_each = var.stages
