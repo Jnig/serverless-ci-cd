@@ -95,7 +95,7 @@ POLICY
 resource "aws_codebuild_project" "project" {
   name          = "${var.name}"
   description   = "${var.name}"
-  build_timeout = "5"
+  build_timeout = "30"
   service_role  = "${aws_iam_role.codebuild.arn}"
 
   artifacts {
